@@ -12,6 +12,7 @@ struct AddView: View {
     @State private var type = ""
     @State private var price = ""
     @State private var showAlert = false
+    @State private var date = Date()
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -30,12 +31,13 @@ struct AddView: View {
                     .background(.gray.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .keyboardType(.decimalPad)
+                DatePicker("Date", selection: $date, displayedComponents: .date)
             }
             .padding()
             .textFieldStyle(PlainTextFieldStyle())
             Button(action: {
                 if let priceValue = Decimal(string: price) {
-                    viewModel.addExpense(type: type, price: priceValue)
+                    viewModel.addExpense(type: type, price: priceValue, date: date)
                     type = ""
                     price = ""
                     

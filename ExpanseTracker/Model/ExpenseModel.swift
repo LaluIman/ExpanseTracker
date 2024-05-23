@@ -11,5 +11,6 @@ struct Expense: Identifiable {
     var id = UUID()
     var type: String
     var price: Decimal
+    var date: Date
 }
 

@@ -9,9 +9,12 @@ import SwiftUI
 
     struct MainView: View {
         @StateObject var viewModel = ExpenseViewModel()
+        @State private var showAlert = false
+        @State private var deletionIndex: Int?
 
         var body: some View {
             NavigationView {
+                ScrollView {
                 VStack {
                     Text("My Expense")
                         .font(.largeTitle).bold()
@@ -34,17 +37,27 @@ import SwiftUI
                         .font(.headline)
                         .padding(.top)
 
-                    List {
-                        ForEach(viewModel.expenses) { expense in
-                            HStack {
-                                Text(expense.type)
-                                Spacer()
-                                Text("\(expense.price, format: .currency(code: "USD"))")
-                            }
-                        }
-                        .onDelete(perform: viewModel.removeExpenses)
+                        VStack {
+                            ForEach(viewModel.expenses.indices.reversed(), id: \.self) { index in
+                                        ExpenseRow(expense: viewModel.expenses[index], deleteAction: {
+                                            showAlert = true
+                                            deletionIndex = index
+                                        })
+                                    }                        }
                     }
                 }
+                .alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text("Confirm Deletion"),
+                                    message: Text("Are you sure you want to delete this expense?"),
+                                    primaryButton: .destructive(Text("Delete")) {
+                                        if let index = deletionIndex {
+                                            viewModel.deleteExpense(at: index)
+                                        }
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
                 .navigationBarItems(trailing: NavigationLink(destination: AddView(viewModel: viewModel)) {
                         Image(systemName: "plus.circle.fill")
                             .font(.largeTitle)
