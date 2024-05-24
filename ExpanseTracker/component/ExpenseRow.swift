@@ -32,8 +32,8 @@ struct ExpenseRow: View {
                
            }
            .padding()
-           .background(Color(UIColor.secondarySystemBackground))
-           .cornerRadius(8)
+           .background(.ultraThinMaterial)
+           .cornerRadius(15)
            .padding(.horizontal)
        }
 }

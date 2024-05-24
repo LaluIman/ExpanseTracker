@@ -24,15 +24,17 @@ struct PieChartView: View {
                 ForEach(expenses) { expense in
                     SectorMark(
                         angle: .value("Price", expense.price),
-                        outerRadius: .ratio(1.0)
+                        innerRadius: .ratio(0.5),
+                        outerRadius: .ratio(1.0),
+                        angularInset: 1.5
                     )
+                    .cornerRadius(5)
                     .foregroundStyle(by: .value("Type", expense.type))
                 }
             }
             .chartLegend(.visible)
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
-            
             .padding()
         }
 }
