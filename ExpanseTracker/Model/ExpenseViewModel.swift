@@ -10,6 +10,7 @@ import Combine
 
 class ExpenseViewModel: ObservableObject {
     @Published var expenses: [Expense] = []
+    @Published var availableTypes: [String] = ["Gas", "Clothes", "Food", "Transport", "Entertainment"]
 
     func addExpense(type: String, price: Decimal, date: Date) {
         let newExpense = Expense(type: type, price: price, date: date)
@@ -23,6 +24,14 @@ class ExpenseViewModel: ObservableObject {
     func deleteExpense(at index: Int) {
             expenses.remove(at: index)
         }
+    
+    func addNewType(_ type: String) {
+            let normalizedType = type
+            if !availableTypes.contains(normalizedType) {
+                availableTypes.append(normalizedType)
+            }
+        }
+
     
     var mostCommonExpenseType: String {
             let types = expenses.map { $0.type }

@@ -9,10 +9,11 @@ import SwiftUI
 
 struct AddView: View {
     @ObservedObject var viewModel: ExpenseViewModel
-    @State private var type = ""
+    @State private var selectedType: String = ""
+    @State private var newType: String = ""
     @State private var price = ""
-    @State private var showAlert = false
     @State private var date = Date()
+    @State private var showAlert = false
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -22,23 +23,28 @@ struct AddView: View {
                     .padding()
                     .font(.title).bold()
                 
-                TextField("what did you spend on?", text: $type)
+                Section(header: Text("Type of Payment").font(.title3).fontWeight(.bold)) {
+                    VStack {
+                        Picker("Select Type", selection: $selectedType) {
+                               ForEach(viewModel.availableTypes, id: \.self) { type in
+                                   Text(type).tag(type)
+                               }
+                        }
+                    }
+                   }
+                TextField("how much the price? {$}", text: $price)
                     .padding()
-                    .background(.gray.opacity(0.2))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                TextField("how much the price?", text: $price)
-                    .padding()
-                    .background(.gray.opacity(0.2))
+                    .background(Color(.secondarySystemBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .keyboardType(.decimalPad)
-                DatePicker("Date", selection: $date, displayedComponents: .date)
+                DatePicker("Date you spend on", selection: $date, displayedComponents: .date)
             }
             .padding()
             .textFieldStyle(PlainTextFieldStyle())
             Button(action: {
                 if let priceValue = Decimal(string: price) {
-                    viewModel.addExpense(type: type, price: priceValue, date: date)
-                    type = ""
+                    viewModel.addExpense(type: selectedType, price: priceValue, date: date)
+                    selectedType = ""
                     price = ""
                     
                     presentationMode.wrappedValue.dismiss()
@@ -59,6 +65,10 @@ struct AddView: View {
             }
         }
         .frame(height: 700, alignment: .top)
+        .padding()
+                .navigationBarItems(trailing: NavigationLink(destination: ExpenseTypeView(viewModel: viewModel)) {
+                    Image(systemName: "plus")
+                })
     }
 }
 

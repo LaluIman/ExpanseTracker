@@ -19,6 +19,7 @@
 		8161FBCE2BFD8E3F004A6CF1 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161FBCD2BFD8E3F004A6CF1 /* PieChartView.swift */; };
 		8161FBD02BFD8F91004A6CF1 /* ExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161FBCF2BFD8F91004A6CF1 /* ExpenseViewModel.swift */; };
 		8161FBD22BFD8FB4004A6CF1 /* ExpenseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161FBD12BFD8FB4004A6CF1 /* ExpenseModel.swift */; };
+		817705612C1159640026D9C0 /* ExpenseTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817705602C1159630026D9C0 /* ExpenseTypeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		8161FBCD2BFD8E3F004A6CF1 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		8161FBCF2BFD8F91004A6CF1 /* ExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewModel.swift; sourceTree = "<group>"; };
 		8161FBD12BFD8FB4004A6CF1 /* ExpenseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseModel.swift; sourceTree = "<group>"; };
+		817705602C1159630026D9C0 /* ExpenseTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTypeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				8161FBC92BFD8E02004A6CF1 /* MainView.swift */,
 				8161FBCB2BFD8E24004A6CF1 /* AddView.swift */,
 				8161FBCD2BFD8E3F004A6CF1 /* PieChartView.swift */,
+				817705602C1159630026D9C0 /* ExpenseTypeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				8161FBCE2BFD8E3F004A6CF1 /* PieChartView.swift in Sources */,
 				8161FBCA2BFD8E02004A6CF1 /* MainView.swift in Sources */,
 				8161FBA02BFD8DC4004A6CF1 /* ExpanseTrackerApp.swift in Sources */,
+				817705612C1159640026D9C0 /* ExpenseTypeView.swift in Sources */,
 				8161FBD02BFD8F91004A6CF1 /* ExpenseViewModel.swift in Sources */,
 				8161FBCC2BFD8E24004A6CF1 /* AddView.swift in Sources */,
 			);

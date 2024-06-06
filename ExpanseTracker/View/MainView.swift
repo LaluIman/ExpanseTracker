@@ -42,12 +42,15 @@ import SwiftUI
                     
                     VStack {
                         if !viewModel.expenses.isEmpty{
-                            ForEach(viewModel.expenses.indices.reversed(), id: \.self) { index in
-                                ExpenseRow(expense: viewModel.expenses[index], deleteAction: {
-                                    showAlert = true
-                                    deletionIndex = index
-                                })
+                            VStack {
+                                ForEach(viewModel.expenses.indices.reversed(), id: \.self) { index in
+                                    ExpenseRow(expense: viewModel.expenses[index], deleteAction: {
+                                        showAlert = true
+                                        deletionIndex = index
+                                    })
+                                }
                             }
+        
                         } else {
                             VStack {
                                 Text("No payment yet")

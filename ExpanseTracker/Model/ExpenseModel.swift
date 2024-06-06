@@ -12,5 +12,9 @@ struct Expense: Identifiable {
     var type: String
     var price: Decimal
     var date: Date
+    
+    static func == (lhs: Expense, rhs: Expense) -> Bool {
+          return lhs.id == rhs.id
+      }
 }
 
