@@ -14,7 +14,7 @@ struct ExpenseRow: View {
        var body: some View {
            VStack(alignment: .leading, spacing: 4) {
                Text(expense.type)
-                   .font(.system(size: 25, weight: .bold))
+                   .font(.system(size: 20, weight: .bold))
                HStack {
                    Text("\(expense.price, format: .currency(code: "USD"))")
                    Spacer()
@@ -32,10 +32,11 @@ struct ExpenseRow: View {
                
            }
            .padding()
-           .background(.ultraThinMaterial)
-           .cornerRadius(15)
+           .background(Color(.secondarySystemBackground))
+           .cornerRadius(20)
            .padding(.horizontal)
        }
 }
+
 
 

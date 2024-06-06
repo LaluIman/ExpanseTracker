@@ -17,58 +17,78 @@ struct AddView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        VStack{
-            VStack {
-                Text("Add Expanse!")
-                    .padding()
-                    .font(.title).bold()
-                
-                Section(header: Text("Type of Payment").font(.title3).fontWeight(.bold)) {
-                    VStack {
-                        Picker("Select Type", selection: $selectedType) {
-                               ForEach(viewModel.availableTypes, id: \.self) { type in
-                                   Text(type).tag(type)
-                               }
+        NavigationView{
+            VStack{
+                VStack {
+                    Text("Add Expanse!")
+                        .padding()
+                        .font(.title).bold()
+                    
+                    HStack {
+                        HStack{
+                            Picker("Select Type:", selection: $selectedType) {
+                                ForEach(viewModel.availableTypes, id: \.self) { type in
+                                        Text(type)
+                                            .tag(type)
+                                        .font(.title3).bold()
+                                    
+                                }
+                            }
+                            .scaleEffect(1.1)
+                            .pickerStyle(.navigationLink)
+                            .padding(.trailing)
                         }
+                        .padding(.horizontal, 20)
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        
+                        NavigationLink(destination: ExpenseTypeView(viewModel: viewModel)) {
+                            HStack {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.title)
+                            }
+                        }
+                        .padding(.leading)
                     }
-                   }
-                TextField("how much the price? {$}", text: $price)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .keyboardType(.decimalPad)
-                DatePicker("Date you spend on", selection: $date, displayedComponents: .date)
-            }
-            .padding()
-            .textFieldStyle(PlainTextFieldStyle())
-            Button(action: {
-                if let priceValue = Decimal(string: price) {
-                    viewModel.addExpense(type: selectedType, price: priceValue, date: date)
-                    selectedType = ""
-                    price = ""
+                    .padding(.bottom)
                     
-                    presentationMode.wrappedValue.dismiss()
-                } else {
-                    
-                    showAlert = true
+                    TextField("how much the price? ($USD)", text: $price)
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .keyboardType(.decimalPad)
+                    DatePicker("Date you spend on", selection: $date, displayedComponents: .date)
+                        .padding(.top)
                 }
-            }) {
-                Text("Add Expense")
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .padding()
+                .padding()
+                .textFieldStyle(PlainTextFieldStyle())
+                Button(action: {
+                    if let priceValue = Decimal(string: price) {
+                        viewModel.addExpense(type: selectedType, price: priceValue, date: date)
+                        selectedType = ""
+                        price = ""
+                        
+                        presentationMode.wrappedValue.dismiss()
+                    } else {
+                        
+                        showAlert = true
+                    }
+                }) {
+                    Text("Add Expense")
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .padding()
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number for the price."), dismissButton: .default(Text("OK")))
+                }
             }
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number for the price."), dismissButton: .default(Text("OK")))
-            }
+            .frame(height: 700, alignment: .top)
+            .padding()
         }
-        .frame(height: 700, alignment: .top)
-        .padding()
-                .navigationBarItems(trailing: NavigationLink(destination: ExpenseTypeView(viewModel: viewModel)) {
-                    Image(systemName: "plus")
-                })
     }
 }
 
