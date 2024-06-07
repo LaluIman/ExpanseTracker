@@ -11,6 +11,7 @@ import SwiftUI
         @StateObject var viewModel = ExpenseViewModel()
         @State private var showAlert = false
         @State private var deletionIndex: Int?
+        @State private var isFullScreenPresented = false
 
         var body: some View {
             NavigationView {
@@ -73,11 +74,17 @@ import SwiftUI
                                     secondaryButton: .cancel()
                                 )
                             }
-                .navigationBarItems(trailing: NavigationLink(destination: AddView(viewModel: viewModel)) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.largeTitle)
-                    
-                })
+                .navigationBarItems(trailing: 
+                    Button(action: {
+                            isFullScreenPresented = true
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.title)
+                        }
+                        .fullScreenCover(isPresented: $isFullScreenPresented) {
+                            AddView(viewModel: viewModel)
+                        }
+                )
                 .navigationBarItems(leading:
                         Text("Expense Tracker")
                     .font(.system(size:25, weight: .bold))

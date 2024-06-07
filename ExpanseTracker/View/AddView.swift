@@ -15,6 +15,7 @@ struct AddView: View {
     @State private var date = Date()
     @State private var showAlert = false
     @Environment(\.presentationMode) var presentationMode
+    @State private var isFullScreenPresented = false
 
     var body: some View {
         NavigationView{
@@ -34,21 +35,25 @@ struct AddView: View {
                                     
                                 }
                             }
-                            .scaleEffect(1.1)
+                            .scaleEffect(1)
                             .pickerStyle(.navigationLink)
-                            .padding(.trailing)
+                            .padding(.leading, -10)
                         }
                         .padding(.horizontal, 20)
                         .padding()
                         .background(Color(.secondarySystemBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         
-                        NavigationLink(destination: ExpenseTypeView(viewModel: viewModel)) {
-                            HStack {
+                        
+                        Button(action: {
+                                isFullScreenPresented = true
+                            }) {
                                 Image(systemName: "plus.circle.fill")
                                     .font(.title)
                             }
-                        }
+                            .fullScreenCover(isPresented: $isFullScreenPresented) {
+                                ExpenseTypeView(viewModel: viewModel)
+                            }
                         .padding(.leading)
                     }
                     .padding(.bottom)
@@ -59,7 +64,8 @@ struct AddView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .keyboardType(.decimalPad)
                     DatePicker("Date you spend on", selection: $date, displayedComponents: .date)
-                        .padding(.top)
+                        .fontWeight(.semibold)
+                        .padding()
                 }
                 .padding()
                 .textFieldStyle(PlainTextFieldStyle())
@@ -88,6 +94,16 @@ struct AddView: View {
             }
             .frame(height: 700, alignment: .top)
             .padding()
+            .navigationBarItems(leading:
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("back")
+                    }
+                }
+            )
         }
     }
 }

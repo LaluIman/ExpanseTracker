@@ -25,6 +25,10 @@ class ExpenseViewModel: ObservableObject {
             expenses.remove(at: index)
         }
     
+    func deleteType(_ type: String) {
+           availableTypes.removeAll { $0 == type }
+       }
+    
     func addNewType(_ type: String) {
             let normalizedType = type
             if !availableTypes.contains(normalizedType) {
