@@ -27,13 +27,10 @@ struct PieChartView: View {
         return expenses.reduce(0) { $0 + $1.price }
     }
 
-    var mostCommonExpenseType: String {
-        let types = expenses.map { $0.type.capitalized }
-        let typeCounts = types.reduce(into: [:]) { counts, type in
-            counts[type, default: 0] += 1
-        }
-        return typeCounts.max(by: { $0.value < $1.value })?.key ?? "No Data"
-    }
+    var highestPricedExpenseType: String {
+           let groupedExpenses = calculateChartData()
+           return groupedExpenses.max(by: { $0.total < $1.total })?.type ?? "No Data"
+       }
 
     var body: some View {
         GeometryReader { geometry in
@@ -57,15 +54,16 @@ struct PieChartView: View {
                 .padding()
                 .overlay(
                     VStack {
-                        Text("Most spend")
+                        Text("Most higest")
                             .font(.callout)
                             .foregroundStyle(.secondary)
-                        Text(mostCommonExpenseType)
-                            .font(.headline.bold())
+                        Text(highestPricedExpenseType)
+                            .font(.system(size: 23, weight: .bold))
                             .foregroundColor(.primary)
                             .padding(.bottom)
-                        Text("Total: $ \(totalExpense)")
+                        Text("Total: $\(totalExpense)")
                             .font(.subheadline)
+                            .fontWeight(.semibold)
                             .foregroundColor(.primary)
                             .padding(.bottom)
                     }
